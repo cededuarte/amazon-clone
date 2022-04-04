@@ -1,48 +1,38 @@
-const functions = require('firebase-functions');
-const express = require('express')
-const cors = require('cors')
-
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
-
-// secret key from firebase
-const stripe = require("stripe")(
-    'sk_test_51HPvTZEm4kUlkaUGUtdgfKtGfv4XjINHF9bohxPtgELHIva3ukVTZnoQ0lb7JrT6exoYBDigELGUZZrqCrWGEEDI00bTwhkh9Q'
-    // your private api key here
-);
+const functions =require('firebase-functions');
+const express =require("express");
+const cors = require("cors");
+const stripe = require("stripe")('sk_test_51Kks9nCpm6zIn6qGdvExTS1b7U6XNrAfZdE5dYTYecpMx5L2JBOqBdoZsBBdOUTMLGcCOB1JQwJ3QSpZ86gaAKuP00bw2duHS7')
 
 // API
 
-// - App Config
-const app = express()
+// - App config
+const app = express();
 
-// - Middleware
-app.use(cors({ origin: true }))
-app.use(express.json())
+// - Middlewares
+app.use(cors({ origin: true }));
+app.use(express.json());
 
-// - API Routes
-app.get('/', (request, response) => response.status(200).send('hello world'))
-app.post('/payments/create', async (request, response) => {
-    const total = request.query.total
-    console.log("PAyment request received for -> " + total)
+// - API routes
+app.get("/", (request, response) => response.status(200).send("hello world"));
 
-    const paymentIntent = await stripe.paymentIntents.create({
-        amount: total,
-        currency: "inr"
-    })
+app.post("/payments/create", async (request, response) => {
+  const total = request.query.total;
 
-    // ok created
-    response.status(201).send({
-        clientSecret: paymentIntent.client_secret
-    })
-})
+  console.log("Payment Request Recieved BOOM!!! for this amount >>> ", total);
 
-// - Listen
-exports.api = functions.https.onRequest(app)
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: total, // subunits of the currency
+    currency: "usd",
+  });
 
-// URL: http://localhost:5001/clone-36782/us-central1/api
+  // OK - Created
+  response.status(201).send({
+    clientSecret: paymentIntent.client_secret,
+  });
+});
+
+// - Listen command
+exports.api = functions.https.onRequest(app);
+
+// Example endpoint
+// http://localhost:5001/challenge-4b2b2/us-central1/api

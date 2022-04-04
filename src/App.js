@@ -17,7 +17,7 @@ import { useStateValue } from './context/StateProvider';
 import Footer from './layout/Footer/Footer';
 import ProductList from './components/ProductList/ProductList';
 
-const promise = loadStripe('pk_test_51HPvTZEm4kUlkaUGOprKB6CIt1RW7nlhHhINLYNBJCTM2m2eSwsML1Lq6eEJmHadidUcmUAP1Rbtq45kC4EW9Iv200K0HUq19q')
+const promise = loadStripe('pk_test_51Kks9nCpm6zIn6qG3WBUH5P8IjrS0coWKZpkYG7UB7ETjpBAzf8c9khnoM4VeanPwpXzSFLnbbiwUgw0ylwOVTMa00eqabrlwq')
 
 function App() {
   const [profile, setProfile] = useState([]);

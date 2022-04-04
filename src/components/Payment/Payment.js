@@ -31,7 +31,7 @@ function Payment() {
         url: `/payments/create?total=${getCartTotal(cart) * 100}`,
       });
       setClientSecret(response.data.clientSecret);
-      console.log("secret is -> ", clientSecret);
+      // console.log("secret is -> ", clientSecret);
     };
 
     getClientSecret();
@@ -138,7 +138,7 @@ function Payment() {
                   <span>{processing ? <p>Processing</p> : <p>Buy Now</p>}</span>
                 </button>
               </div>
-
+              {/* Error */}
               {error && <div>error</div>}
             </form>
           </div>
